@@ -1,0 +1,58 @@
+jobs:
+  # ── AI 매매 판단 (15분마다) ───────────────────────────────
+  - name: trade_kr
+    module: jobs.trade_kr
+    function: run
+    cron: "*/15 9-15 * * 1-5"   # 평일 09:00~15:30 매 15분 (한국장)
+    enabled: true
+
+  - name: trade_us_night
+    module: jobs.trade_us
+    function: run
+    cron: "*/15 23 * * 1-5"     # 평일 23:00~23:59 매 15분 (미국장 전반)
+    enabled: true
+
+  - name: trade_us_dawn
+    module: jobs.trade_us
+    function: run
+    cron: "*/15 0-4 * * 2-6"    # 화~토 00:00~04:30 매 15분 (미국장 후반)
+    enabled: true
+
+  # ── 손절 감시 (3분마다, Claude 없이) ─────────────────────
+  - name: stop_loss_kr
+    module: jobs.stop_loss_kr
+    function: run
+    cron: "*/3 9-15 * * 1-5"    # 평일 장중 3분마다
+    enabled: true
+
+  - name: stop_loss_us_night
+    module: jobs.stop_loss_us
+    function: run
+    cron: "*/3 23 * * 1-5"      # 미국장 전반 3분마다
+    enabled: true
+
+  - name: stop_loss_us_dawn
+    module: jobs.stop_loss_us
+    function: run
+    cron: "*/3 0-4 * * 2-6"     # 미국장 후반 3분마다
+    enabled: true
+
+  # ── 유지보수 ──────────────────────────────────────────────
+  - name: cleanup_job
+    module: jobs.cleanup_job
+    function: run
+    cron: "0 6 * * *"           # 매일 오전 6시 로그 정리
+    enabled: true
+
+  # ── 예제 (비활성) ─────────────────────────────────────────
+  - name: hello_job
+    module: jobs.hello_job
+    function: run
+    cron: "*/1 * * * *"
+    enabled: false
+
+  - name: example_sh_job
+    type: shell
+    script: jobs/example.sh
+    cron: "0 6 * * *"
+    enabled: false
