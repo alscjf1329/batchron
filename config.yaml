@@ -1,20 +1,20 @@
 jobs:
   # ── AI 매매 판단 (5분마다) ────────────────────────────────
   - name: trade_kr
-    module: jobs.trade_kr
-    function: run
+    type: shell
+    script: jobs/trade_kr.sh
     cron: "*/5 9-15 * * 1-5"    # 평일 09:00~15:30 매 5분 (한국장)
     enabled: true
 
   - name: trade_us_night
-    module: jobs.trade_us
-    function: run
+    type: shell
+    script: jobs/trade_us.sh
     cron: "*/5 23 * * 1-5"      # 평일 23:00~23:59 매 5분 (미국장 전반)
     enabled: true
 
   - name: trade_us_dawn
-    module: jobs.trade_us
-    function: run
+    type: shell
+    script: jobs/trade_us.sh
     cron: "*/5 0-4 * * 2-6"     # 화~토 00:00~04:30 매 5분 (미국장 후반)
     enabled: true
 
