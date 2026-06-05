@@ -9,8 +9,9 @@ TRADER_PATH="${TRADER_PATH:-/app/auto-trader}"
 cd "$TRADER_PATH"
 source .venv/bin/activate
 
-python - <<'EOF'
-from dotenv import load_dotenv; load_dotenv()
+python -c "
+from dotenv import load_dotenv
+load_dotenv('$TRADER_PATH/.env')
 import runner
 runner.run_brain_mode()
-EOF
+"
