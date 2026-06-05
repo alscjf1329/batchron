@@ -39,6 +39,18 @@ class JobRunner:
             logger.error(f"[{self.name}] failed\n{traceback.format_exc()}")
 
     def _run_python(self):
+        # auto-trader 모듈 캐시 초기화 — 파일 수정 후 재시작 없이 반영
+        import sys
+        _TRADER_MODULES = {
+            "brain", "runner", "factor", "risk", "settings",
+            "kis_api", "notify", "config",
+            "journal", "journal.logger", "journal.snapshot", "journal.review",
+            "strategies", "strategies.base",
+        }
+        for mod in list(sys.modules.keys()):
+            if any(mod == m or mod.startswith(m + ".") for m in _TRADER_MODULES):
+                del sys.modules[mod]
+
         module = importlib.import_module(self.module_path)
         func = getattr(module, self.function_name)
         func()

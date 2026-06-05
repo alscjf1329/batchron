@@ -1,7 +1,7 @@
 """
 trade_kr.py - 한국장 자동매매 잡
 
-cron: */30 9-15 * * 1-5  (평일 09:00~15:30 매 30분)
+cron: */5 9-15 * * 1-5  (평일 09:00~15:30 매 5분)
 batchron이 호출 → auto-trader runner 실행
 
 auto-trader 경로 설정:
